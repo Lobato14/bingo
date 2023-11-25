@@ -2,7 +2,7 @@ import random
 
 # Número de filas y columnas del cartón
 FILAS = 3
-COLUMNAS = 9
+COLUMNAS = 5
 # Números que hay por cartón
 NUMEROS_POR_CARTON = FILAS * COLUMNAS
 # Rango de números
@@ -42,7 +42,7 @@ def verificar_linea(carton, numeros_generados):
     return any(all(numero in numeros_generados for numero in fila) for fila in carton)
 
 def verificar_bingo(carton, numeros_generados):
-    return all(any(numero in numeros_generados for numero in fila) for fila in carton)
+    return all(all(numero in numeros_generados for numero in fila) for fila in carton)
 
 if __name__ == "__main__":
     cartones = []
@@ -59,6 +59,7 @@ if __name__ == "__main__":
             cartones = generar_carton(int(cantidad_cartones))
             mostrar_cartones(cartones)
             
+            bingo_completo = False
             for _ in range(NUMEROS_POR_CARTON):
                 input("Presione Enter para generar un número: ")
                 numero_generado = generar_numero(numeros_generados)
@@ -72,6 +73,10 @@ if __name__ == "__main__":
                         print("Números completos:")
                         for fila in carton:
                             print(fila)
+                        bingo_completo = True
+
+                if bingo_completo:
+                    exit()
 
         opcion = menu()
     print("--- ¡¡¡GRACIAS POR JUGAR!!! ----")
