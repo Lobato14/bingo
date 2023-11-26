@@ -14,8 +14,23 @@ def menu() -> str:
           "2. Salir\n")
     return input("Escoja una opción: ")
 
-def generar_carton(cantidad):
+def generar_carton(cantidad:int) -> list:
+    """
+    Genera uno o más cartones de bingo.
 
+    Parameters
+    ----------
+    - cantidad : int
+        La cantidad de cartones a generar.
+
+    Returns
+    -------
+
+    - list: 
+        Una lista de cartones generados. Cada cartón es una lista de listas,
+        donde cada lista representa una fila del cartón y contiene los números 
+        correspondientes.
+    """
     cartones = []
     numeros_disponibles = list(RANGO_NUMEROS)
 
@@ -26,7 +41,25 @@ def generar_carton(cantidad):
         cartones.append(carton)
     return cartones
 
-def mostrar_cartones(cartones, numeros_generados):
+def mostrar_cartones(cartones:list, numeros_generados:set) -> None:
+    """
+    Muestra en consola los cartones de bingo con los números generados.
+
+    Parameters
+    ----------
+
+    - cartones : list
+        Una lista de cartones. Cada cartón es una lista de listas,
+        donde cada lista representa una fila del cartón y contiene 
+        los números correspondientes.
+
+    - numeros_generados : set
+        Un conjunto de números que ya han sido generados y deben ser marcados con "X".
+
+    Returns
+    -------
+    - None
+    """
     for i, carton in enumerate(cartones, start=1):
         print(f"Cartón {i}:\n")
         for fila in carton:
@@ -37,8 +70,19 @@ def mostrar_cartones(cartones, numeros_generados):
                     print(numero, end=" ")
             print()
 
-def generar_numero(numeros_generados):
+def generar_numero(numeros_generados: set) -> int:
+    """
+    Genera un número aleatorio que no ha sido generado previamente.
 
+    Parameters
+    ----------
+    - numeros_generados : set
+        Un conjunto de números que ya han sido generados.
+
+    Returns
+    -------
+    - int: El número generado.
+    """
     input("Presione Enter para generar un número: ")
     numero = random.choice(list(set(RANGO_NUMEROS) - numeros_generados))
     numeros_generados.add(numero)
