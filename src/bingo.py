@@ -15,6 +15,7 @@ def menu() -> str:
     return input("Escoja una opción: ")
 
 def generar_carton(cantidad):
+
     cartones = []
     numeros_disponibles = list(RANGO_NUMEROS)
 
@@ -37,6 +38,8 @@ def mostrar_cartones(cartones, numeros_generados):
             print()
 
 def generar_numero(numeros_generados):
+
+    input("Presione Enter para generar un número: ")
     numero = random.choice(list(set(RANGO_NUMEROS) - numeros_generados))
     numeros_generados.add(numero)
     print("Número generado:", numero)
@@ -69,21 +72,20 @@ if __name__ == "__main__":
             lineas_cantadas = 0
 
             while not bingo_completo:
-
-                input("Presione Enter para generar un número: ")
-                numero_generado = generar_numero(numeros_generados)
+                generar_numero(numeros_generados)
                 mostrar_cartones(cartones, numeros_generados)
-
-                # Es una lista de booleanos que indica si se ha cantado una línea en cada cartón.
+                
                 lineas_cantadas_carton = [verificar_linea(c, numeros_generados) for c in cartones]
 
                 if any(lineas_cantadas_carton) and lineas_cantadas < 2:
-                    # Se utiliza para encontrar el índice de la primera ocurrencia de True en la 
-                    # lista lineas_cantadas_carton
-                    print(f"¡LINEA en el Cartón {lineas_cantadas_carton.index(True) + 1}!")
-                    lineas_cantadas += 1
+                    try:
+                        index_true = lineas_cantadas_carton.index(True)
+                        print(f"¡LINEA en el Cartón {index_true + 1}!")
+                        lineas_cantadas += 1
+                    except ValueError:
+                        print("No se han encontrado ninguna línea en ningún cartón")
 
-                if verificar_bingo(cartones[lineas_cantadas_carton.index(True)], numeros_generados):
+                if any(lineas_cantadas_carton) and verificar_bingo(cartones[lineas_cantadas_carton.index(True)], numeros_generados):
                     print(f"¡BINGO en el Cartón {lineas_cantadas_carton.index(True) + 1}!")
                     print("Números completos:")
                     for fila in cartones[lineas_cantadas_carton.index(True)]:
@@ -91,11 +93,14 @@ if __name__ == "__main__":
                     bingo_completo = True
 
                 if bingo_completo:
-                    respuesta = input("¿Quieres volver a jugar? (s/n): ")
-                    if respuesta.lower() == 'si':
+                    respuesta = input("¿Quieres volver a jugar? (si/no): ").lower()
+                    while respuesta not in ['si', 'no']:
+                        print("Error: Ingresa 'si' o 'no'.")
+                        respuesta = input("¿Quieres volver a jugar? (si/no): ").lower()
+                    if respuesta == 'si':
                         numeros_generados.clear()
                     else:
-                        exit()
+                        break
 
         opcion = menu()
     print("--- ¡¡¡GRACIAS POR JUGAR!!! ----")
