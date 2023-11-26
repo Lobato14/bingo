@@ -1,5 +1,5 @@
 # # Bingo
 
 <hr>
-    Este es el bingo en el tres en raya
+    Este es el bingo que he hecho. Espero que os guste a todos
 <hr>
