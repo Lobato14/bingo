@@ -9,6 +9,13 @@ NUMEROS_POR_CARTON = FILAS * COLUMNAS
 RANGO_NUMEROS = list(range(1, 91))
 
 def menu() -> str:
+    """
+    Muestra el menú de opciones del juego de Bingo y solicita al usuario que elija una opción.
+
+    Returns
+    -------
+    - str: La opción seleccionada por el usuario.
+    """
     print("---- BINGO ----\n\n"+
           "1. Jugar\n"+
           "2. Salir\n")
@@ -90,10 +97,41 @@ def generar_numero(numeros_generados: set) -> int:
     print("Números generados:", numeros_generados)
     return numero
 
-def verificar_linea(carton, numeros_generados):
+def verificar_linea(carton:list[list[int]], numeros_generados:set) -> bool:
+    """
+    Verifica si hay al menos una línea completa en un cartón de bingo.
+
+    Parameters
+    ----------
+
+    - carton : list[list[int]]
+        Una lista de listas que representa un cartón de bingo.
+    - numeros_generados : set
+        Un conjunto de números que ya han sido generados.
+
+    Returns
+    -------
+    - bool: 
+        True si hay al menos una línea completa en el cartón, False de lo contrario.
+    """
     return any(all(numero in numeros_generados for numero in fila) for fila in carton)
 
-def verificar_bingo(carton, numeros_generados):
+def verificar_bingo(carton:list[list[int]], numeros_generados:set) -> bool:
+    """
+    Verifica si hay un bingo completo en un cartón de bingo.
+
+    Parameters
+    ----------
+    - carton : list[list[int]]
+        Una lista de listas que representa un cartón de bingo.
+    - numeros_generados : set
+        Un conjunto de números que ya han sido generados.
+
+    Returns
+    -------
+    - bool: 
+        True si hay un bingo completo en el cartón, False de lo contrario.
+    """
     return all(all(numero in numeros_generados for numero in fila) for fila in carton)
 
 if __name__ == "__main__":
